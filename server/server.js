@@ -49,6 +49,11 @@ app.get('/categories', function (req, res) {
     res.send(Object.values(rescueModel.categories));
 })
 
+app.get('/numbers', function (req, res) {
+    console.log(rescueModel);
+    res.send(rescueModel.numbers);
+})
+
 app.post('/categories', express.json(), function (req, res) {
     if (req.body) {
         console.log(req.body);

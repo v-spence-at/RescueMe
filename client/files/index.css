@@ -1,0 +1,51 @@
+map {
+    height: 400px;
+    width: 10px;
+}
+
+body {
+    background-color: #A3CCFF;
+}
+
+h1 {
+    color: darkblue;
+    font-size: 24px;
+    font-family: Monaco, monospace;
+}
+
+p {
+    font-family: Monaco, monospace;
+    line-height: 1.5;
+}
+
+ul, ol {
+    font-family: Monaco, monospace;
+    line-height: 1.5;
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+}
+
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    border: none;
+}
+
+.bordered-table {
+    border: 2px solid darkblue;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    font-family: Monaco, monospace;
+    color: white;
+}
+

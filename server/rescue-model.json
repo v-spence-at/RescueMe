@@ -1,21 +1,28 @@
 {
-  "categories": [
-    "cats",
-    "dogs",
-    "birds"
-  ],
-  "emergency numbers": [
+  "numbers": [
     {
-      "number": "112",
+      "number": "01 1234 5678",
       "category": "cats"
     },
     {
-      "number": "113",
+      "number": "01 1234 5678",
       "category": "dogs"
     },
     {
-      "number": "114",
+      "number": "01 1234 5678",
       "category": "birds"
+    },
+    {
+      "number": "01 1234 5678",
+      "category": "rodents"
+    },
+    {
+      "number": "01 1234 5678",
+      "category": "wild animals"
+    },
+    {
+      "number": "01 1234 5678",
+      "category": "reptiles & amphibians"
     }
   ]
 }

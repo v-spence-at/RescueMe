@@ -1,11 +1,27 @@
-window.onload = function () {
+function renderNumbers(numbers) {
+    numbers.forEach(number => {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.textContent = number.number;
+        td.className = 'bordered-table';
+        tr.appendChild(td);
+        const td2 = document.createElement('td');
+        td2.textContent = number.category;
+        td2.className = 'bordered-table';
+        tr.appendChild(td2);
+
+        document.getElementById('numbersTable').appendChild(tr);
+    });
+}
+
+function fetchNumbers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         const bodyElement = document.querySelector("body");
         if (xhr.status === 200) {
-            const categories = JSON.parse(xhr.responseText);
-            console.log(categories);
-            bodyElement.append(displayCategories(categories));
+            const numbers = JSON.parse(xhr.responseText);
+            renderNumbers(numbers);
+            console.log(numbers);
         } else {
             bodyElement.append(
                 "Daten konnten nicht geladen werden, Status " +
@@ -16,21 +32,11 @@ window.onload = function () {
         }
 
     };
-    xhr.open("GET", "/categories");
+    xhr.open("GET", "/numbers");
     xhr.send();
-};
-
-// Function to display movies
-function displayCategories(categories) {
-
-    const root = document.createElement('root');
-    const ul = document.createElement('ul');
-    categories.forEach(category => {
-        const li = document.createElement('li');
-        li.append(category);
-        ul.append(li);
-    });
-    root.append(ul);
-    return root;
 }
 
+// Fetch categories on page load
+window.onload = function () {
+    fetchNumbers();
+};
