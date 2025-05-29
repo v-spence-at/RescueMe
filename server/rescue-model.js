@@ -1,0 +1,21 @@
+const model =  {
+         "categories": [
+            "cats", "dogs", "birds", "other"
+         ],
+   "emergency numbers": [
+      {
+         "number": "112",
+         "category": "cats"
+      },
+      {
+         "number": "113",
+         "category": "dogs"
+      },
+      {
+         "number": "114",
+         "category": "birds"
+      }
+   ]
+};
+
+module.exports = model;
