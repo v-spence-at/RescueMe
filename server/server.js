@@ -30,7 +30,6 @@ function loadData() {
 function saveData() {
     try {
         fs.writeFileSync(DATA_FILE, JSON.stringify(rescueModel, null, 2));
-        console.log('Data saved:', rescueModel);
     } catch (err) {
         console.error('Error writing JSON file:', err);
     }
@@ -49,6 +48,18 @@ app.use(express.static(path.join(__dirname, '../client/files')));
 app.get('/categories', function (req, res) {
     res.send(Object.values(rescueModel.categories));
 })
+
+app.post('/categories', express.json(), function (req, res) {
+    if (req.body) {
+        console.log(req.body);
+        rescueModel.categories = req.body;
+        res.status(200).send({
+            message: 'Categories updated successfully', categories: rescueModel.categories
+        });
+    } else {
+        res.status(400).send("Invalid Input");
+    }
+});
 
 // Save data when the server shuts down
 process.on('SIGINT', () => {

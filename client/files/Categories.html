@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Categories</title>
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category List</title>
+    <link href="categories.css" rel="stylesheet"/>
 </head>
 <body>
-<h1>Categories</h1>
+<a href="Index.html">Back</a>
+<h1>Category List</h1>
+<ul id="categoryList"></ul>
+<input type="text" id="categoryInput" placeholder="Add a new category">
+<button onclick="addCategory()">Add</button>
+<button onclick="submitCategories()">Submit</button>
+<script src="categories.js"></script>
+
 </body>
 </html>

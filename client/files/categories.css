@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start; /* Align items at the start */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-right: 20px; /* Space between the list and buttons */
+}
+
+li {
+    margin: 5px 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    margin-left: 10px;
+}
