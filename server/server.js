@@ -3,11 +3,41 @@
 // Delete a New category
 
 const express = require('express');
+
+const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
-const rescueModel = require('./rescue-model.js');
 
 const app = express();
+const PORT = 3000;
+const DATA_FILE = path.join(__dirname, 'rescue-model.json');
+
+let rescueModel;
+
+// Load JSON data from the file on startup
+function loadData() {
+    try {
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        rescueModel = JSON.parse(data);
+        console.log('Data loaded:', rescueModel);
+    } catch (err) {
+        console.error('Error reading JSON file:', err);
+        rescueModel = {}; // Initialize with an empty object if there's an error
+    }
+}
+
+// Save JSON data to the file on shutdown
+function saveData() {
+    try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(rescueModel, null, 2));
+        console.log('Data saved:', rescueModel);
+    } catch (err) {
+        console.error('Error writing JSON file:', err);
+    }
+}
+
+// Load data when the server starts
+loadData();
 
 // Parse urlencoded bodies
 app.use(bodyParser.json());
@@ -20,7 +50,18 @@ app.get('/categories', function (req, res) {
     res.send(Object.values(rescueModel.categories));
 })
 
+// Save data when the server shuts down
+process.on('SIGINT', () => {
+    saveData();
+    process.exit();
+});
 
-app.listen(3000)
+process.on('SIGTERM', () => {
+    saveData();
+    process.exit();
+});
 
-console.log("Server now listening on http://localhost:3000/")
+
+app.listen(PORT, () => {
+    console.log('Server now running on http://localhost:${PORT}');
+});

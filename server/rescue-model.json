@@ -1,7 +1,7 @@
-const model =  {
-         "categories": [
-            "cats", "dogs", "birds", "other"
-         ],
+{
+   "categories": [
+      "cats", "dogs", "birds", "other"
+   ],
    "emergency numbers": [
       {
          "number": "112",
@@ -16,6 +16,4 @@ const model =  {
          "category": "birds"
       }
    ]
-};
-
-module.exports = model;
+}
