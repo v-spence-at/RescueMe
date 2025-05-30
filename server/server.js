@@ -1,9 +1,4 @@
-// Create a GET AllCategories
-// Add a New Category
-// Delete a New category
-
 const express = require('express');
-
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -44,22 +39,17 @@ app.use(bodyParser.json());
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, '../client/files')));
 
-// Configure a 'get' endpoint for all categories
-app.get('/categories', function (req, res) {
-    res.send(Object.values(rescueModel.categories));
-})
-
-app.get('/numbers', function (req, res) {
+app.get('/entries', function (req, res) {
     console.log(rescueModel);
-    res.send(rescueModel.numbers);
+    res.send(rescueModel.entries);
 })
 
-app.post('/categories', express.json(), function (req, res) {
+app.post('/entries', express.json(), function (req, res) {
     if (req.body) {
         console.log(req.body);
-        rescueModel.categories = req.body;
+        rescueModel.entries = req.body;
         res.status(200).send({
-            message: 'Categories updated successfully', categories: rescueModel.categories
+            message: 'Categories updated successfully', entries: rescueModel.entries
         });
     } else {
         res.status(400).send("Invalid Input");
@@ -77,7 +67,6 @@ process.on('SIGTERM', () => {
     process.exit();
 });
 
-
 app.listen(PORT, () => {
-    console.log('Server now running on http://localhost:${PORT}');
+    console.log(`Server now running on http://localhost:${PORT}`);
 });

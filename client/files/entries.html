@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Entries</title>
+    <link href="entries.css" rel="stylesheet"/>
+    <script src="entries.js" defer></script>
+</head>
+<body>
+    <a href="Index.html">Back</a>
+    <h1>Edit Entries</h1>
+    <table id="entriesTable">
+        <tr>
+            <td class="bordered-table">NUMBER</td>
+            <td class="bordered-table">CATEGORY</td>
+            <td class="bordered-table">DELETE</td>
+        </tr>
+    </table>
+
+    <input type="text" id="numberInput" placeholder="Add a new number">
+    <input type="text" id="categoryInput" placeholder="Add a new category">
+    <button onclick="addNumber()">Add</button>
+    <button onclick="submitNumbers()">Submit</button>
+</body>
+</html>
