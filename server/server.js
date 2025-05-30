@@ -48,7 +48,11 @@ app.get('/entries', function (req, res) {
 
 app.post('/add-entry', function (req, res) {
     if (req.body) {
-        const entry = req.body;
+        const entry =  {
+            ID: rescueModel.entries.length,
+            number: req.body.number,
+            category: req.body.category
+        };
         entry.ID = rescueModel.entries.length;
         console.log(entry);
         rescueModel.entries.push(entry);
@@ -63,8 +67,7 @@ app.post('/add-entry', function (req, res) {
 
 app.delete('/entries/:entryId', (req, res) => {
     const entryId = parseInt(req.params.entryId, 10);
-    const index = rescueModel.entries.findIndex(entry => entry.ID === entryId);
-
+    const index = rescueModel.entries.findIndex(entry => entry.ID === Number(entryId));
     if (index !== -1) {
         // Remove the entry from the array
         const entry = rescueModel.entries[index];
@@ -78,6 +81,23 @@ app.delete('/entries/:entryId', (req, res) => {
     }
 });
 
+app.put('/entries', (req, res) => {
+    if (req.body) {
+        const entryInput = req.body;
+        console.log("updating entry with ID " + entryInput.ID);
+        const index = rescueModel.entries.findIndex(entry => entry.ID === Number(entryInput.ID));
+        if (index !== -1) { // we found it
+            rescueModel.entries[index] = entryInput;
+            console.log("Updated entries:", rescueModel.entries);
+            return res.status(200).json({ message: 'Entry updated successfully' });
+        } else {
+            console.log("Entry not found");
+            return res.status(404).json({ message: 'Entry not found' });
+        }
+    } else {
+        res.status(400).send("Invalid Input");
+    }
+});
 
 // Save data when the server shuts down
 process.on('SIGINT', () => {

@@ -12,8 +12,10 @@
     <h1>Edit Entries</h1>
     <table id="entriesTable">
         <tr>
+            <td class="bordered-table">ID</td>
             <td class="bordered-table">NUMBER</td>
             <td class="bordered-table">CATEGORY</td>
+            <td class="bordered-table">EDIT</td>
             <td class="bordered-table">DELETE</td>
         </tr>
     </table>
@@ -22,5 +24,6 @@
     <input type="text" id="categoryInput" placeholder="Add a new category">
     <button onclick="addEntryWithAjax()">Add</button>
     <button onclick="submitNumbers()">Submit</button>
+    <div id="messages"></div>
 </body>
 </html>
