@@ -1,51 +1,25 @@
-function addCategory() {
-    const input = document.getElementById('categoryInput');
-    const categoryName = input.value.trim();
-    if (categoryName) {
-        const li = document.createElement('li');
-        li.textContent = categoryName;
+function addEntryWithAjax() {
+    const categoryInput = document.getElementById('categoryInput');
+    const numberInput = document.getElementById('numberInput');
+    const categoryName = categoryInput.value.trim();
+    const numberValue = numberInput.value.trim();
 
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function () {
-            li.remove();
+    if (categoryName && numberValue) {
+        entry = {
+            number: numberValue,
+            category: categoryName
         };
-
-        li.appendChild(deleteButton);
-        document.getElementById('categoryList').appendChild(li);
-        input.value = ''; // Clear the input field
-    } else {
-        alert('Please enter a category name.');
-    }
-}
-
-function addCategoryWithAjax() {
-    const input = document.getElementById('categoryInput');
-    const categoryName = input.value.trim();
-
-    if (categoryName) {
-        // Create a new list item
-        const li = document.createElement('li');
-        li.textContent = categoryName;
-
-        // Create a delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function () {
-            li.remove();
-        };
-
-        li.appendChild(deleteButton);
-        document.getElementById('categoryList').appendChild(li);
-        input.value = ''; // Clear the input field
+        renderEntry(entry);
+        categoryInput.value = '';
+        numberInput.value = '';
 
         // Send the category name to the server using AJAX
-        fetch('/add-category', { // Replace with your server endpoint
+        fetch('/add-entry', { // Replace with your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: categoryName })
+            body: JSON.stringify(entry)
         })
             .then(response => {
                 if (!response.ok) {
@@ -64,68 +38,55 @@ function addCategoryWithAjax() {
     }
 }
 
-function submitCategories() {
-    const categories = [];
-    const listItems = document.querySelectorAll('#categoryList li');
-    listItems.forEach(item => {
-        categories.push(item.firstChild.textContent); // Get the category name
-    });
 
-    if (categories.length > 0) {
-        // Create a new XMLHttpRequest object
-        const xhr = new XMLHttpRequest();
+function deleteEntryWithAjax(tr) {
+    const entryId = tr.getAttribute('id');
 
-        // Configure it: POST-request for the URL /addMovies
-        xhr.open('POST', 'http://localhost:3000/categories', true);
-
-        // Set the request header to indicate JSON data
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-        // Convert the array of IDs to a JSON string
-        const jsonData = JSON.stringify(categories);
-
-        // Define what happens on successful data submission
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Handle the response from the server
-                console.log('Success:', xhr.responseText);
-            } else if (xhr.readyState === 4) {
-                // Handle errors
-                console.error('Error:', xhr.statusText);
+    fetch(`/entries/${entryId}`, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-
-        // Send the request with the JSON string as the payload
-        xhr.send(jsonData);
-    } else {
-        alert('No categories to submit.');
-    }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Entry deleted:', data);
+            // Optionally, update the UI to reflect the deletion
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 }
 
-function renderEntries(entries) {
-    entries.forEach(entry => {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.textContent = entry.number;
-        td.className = 'bordered-table';
-        tr.appendChild(td);
-        const td2 = document.createElement('td');
-        td2.textContent = entry.category;
-        td2.className = 'bordered-table';
-        tr.appendChild(td2);
 
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function () {
-            tr.remove();
-        };
-        const td3 = document.createElement('td');
-        td3.appendChild(deleteButton);
-        tr.appendChild(td3);
+function renderEntry(entry) {
+    const tr = document.createElement('tr');
+    tr.setAttribute('id', entry.ID);
+    const td = document.createElement('td');
 
-        document.getElementById('entriesTable').appendChild(tr);
-    });
+    td.textContent = entry.number;
+    td.className = 'bordered-table';
+    tr.appendChild(td);
+    const td2 = document.createElement('td');
+    td2.textContent = entry.category;
+    td2.className = 'bordered-table';
+    tr.appendChild(td2);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function () {
+        deleteEntryWithAjax(tr);
+        tr.remove();
+    };
+    const td3 = document.createElement('td');
+    td3.appendChild(deleteButton);
+    tr.appendChild(td3);
+
+    document.getElementById('entriesTable').appendChild(tr);
 }
+
 
 function fetchEntries() {
     const xhr = new XMLHttpRequest();
@@ -133,7 +94,9 @@ function fetchEntries() {
         const bodyElement = document.querySelector("body");
         if (xhr.status === 200) {
             const entries = JSON.parse(xhr.responseText);
-            renderEntries(entries);
+            entries.forEach(entry => {
+                renderEntry(entry);
+            });
             console.log(entries);
         } else {
             bodyElement.append(
