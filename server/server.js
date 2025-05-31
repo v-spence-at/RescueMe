@@ -2,10 +2,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
-
+const axios = require("axios");
 const app = express();
+const shortId= require('shortid');
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'rescue-model.json');
+const URL = "https://api.opencagedata.com/geocode/v1/json?key=477650a203ff446ba31a00fa8d53afdd&q=";
 
 let rescueModel;
 
@@ -24,7 +26,6 @@ function loadData() {
 // Save JSON data to the file on shutdown
 function saveData() {
     try {
-        console.log('Data saved:', rescueModel);
         fs.writeFileSync(DATA_FILE, JSON.stringify(rescueModel, null, 2));
     } catch (err) {
         console.error('Error writing JSON file:', err);
@@ -49,11 +50,11 @@ app.get('/entries', function (req, res) {
 app.post('/add-entry', function (req, res) {
     if (req.body) {
         const entry =  {
-            ID: rescueModel.entries.length,
+            ID: shortId.generate(),
             number: req.body.number,
-            category: req.body.category
+            category: req.body.category,
+            url: req.body.url
         };
-        entry.ID = rescueModel.entries.length;
         console.log(entry);
         rescueModel.entries.push(entry);
         res.status(200).send({
@@ -66,8 +67,8 @@ app.post('/add-entry', function (req, res) {
 });
 
 app.delete('/entries/:entryId', (req, res) => {
-    const entryId = parseInt(req.params.entryId, 10);
-    const index = rescueModel.entries.findIndex(entry => entry.ID === Number(entryId));
+    const entryId = req.params.entryId;
+    const index = rescueModel.entries.findIndex(entry => entry.ID === entryId);
     if (index !== -1) {
         // Remove the entry from the array
         const entry = rescueModel.entries[index];
@@ -85,7 +86,7 @@ app.put('/entries', (req, res) => {
     if (req.body) {
         const entryInput = req.body;
         console.log("updating entry with ID " + entryInput.ID);
-        const index = rescueModel.entries.findIndex(entry => entry.ID === Number(entryInput.ID));
+        const index = rescueModel.entries.findIndex(entry => entry.ID === entryInput.ID);
         if (index !== -1) { // we found it
             rescueModel.entries[index] = entryInput;
             console.log("Updated entries:", rescueModel.entries);
@@ -98,6 +99,32 @@ app.put('/entries', (req, res) => {
         res.status(400).send("Invalid Input");
     }
 });
+
+app.get('/address', function (req, res) {
+    console.log(req.query);
+    const query = req.query.query;
+    if (query != null) {
+        axios.get(URL + query)
+            .then(response => {
+                console.log(response.data.results[0]);
+                const data =  {
+                    "address" : response.data.results[0].formatted,
+                    "url": response.data.results[0].annotations.OSM.url
+                };
+                res.json(data); // Send the response data back to the client
+            })
+            .catch(err => {
+                console.log(err);
+                res.sendStatus(400); // Send a 400 status code in case of an error
+            });
+    } else {
+        console.log("No query parameter");
+        res.sendStatus(400); // Send a 400 status code if no title is provided
+    }
+
+    //"https://api.opencagedata.com/geocode/v1/json?q=52.5432379%2C+13.4142133&key=477650a203ff446ba31a00fa8d53afdd"
+}),
+
 
 // Save data when the server shuts down
 process.on('SIGINT', () => {

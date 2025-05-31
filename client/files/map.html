@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Maps Embed Example</title>
+  <title>User-Generated Locations</title>
   <style>
     /* Set the size of the map */
     #map {
@@ -14,19 +14,95 @@
 </head>
 <body>
 
-<h1>My Google Map</h1>
-<div id="map">
-  <iframe
-          src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d233767.66770521633!2d16.24469651256567!
-          3d48.21674831362973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sTier%C3%A4rzte%20Wien!5e0!3m2!1sen!2sat!4v1748527186270!5m2!1sen!2sat"
-          width="600"
-          height="450"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
+<h1>User-Generated Locations</h1>
 
+<!-- Form to add a new location -->
+<form id="locationForm">
+  <input type="text" id="name" placeholder="Location Name" required>
+  <input type="text" id="description" placeholder="Description" required>
+  <input type="number" id="lat" placeholder="Latitude" required>
+  <input type="number" id="lng" placeholder="Longitude" required>
+  <button type="submit">Add Location</button>
+</form>
+
+<div id="map"></div>
+
+<script>
+  const form = document.getElementById('locationForm');
+  const mapDiv = document.getElementById('map');
+  let map;
+  let markers = [];
+
+  // Initialize the map
+  function initMap() {
+    map = new google.maps.Map(mapDiv, {
+      zoom: 10,
+      center: {
+        center: { lat: 48.216748, lng: 16.244696 } // Center the map on a default location
+      });
+    loadLocations(); // Load existing locations from the API
+  }
+
+    // Load existing locations from the API
+    async function loadLocations() {
+      try {
+        const response = await fetch('http://localhost:3000/api/locations');
+        const locations = await response.json();
+        locations.forEach(location => {
+          addMarker(location);
+        });
+      } catch (error) {
+        console.error('Error loading locations:', error);
+      }
+    }
+
+    // Add a marker to the map
+    function addMarker(location) {
+      const marker = new google.maps.Marker({
+        position: { lat: location.coordinates.lat, lng: location.coordinates.lng },
+        map: map,
+        title: location.name
+      });
+      markers.push(marker);
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent the default form submission
+
+      const name = document.getElementById('name').value;
+      const description = document.getElementById('description').value;
+      const lat = parseFloat(document.getElementById('lat').value);
+      const lng = parseFloat(document.getElementById('lng').value);
+
+      const newLocation = {
+        name,
+        description,
+        coordinates: { lat, lng }
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/api/locations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newLocation)
+        });
+
+        if (response.ok) {
+          const location = await response.json();
+          addMarker(location); // Add the new marker to the map
+          form.reset(); // Reset the form
+        } else {
+          console.error('Error adding location:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>

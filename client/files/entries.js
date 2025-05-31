@@ -2,18 +2,21 @@ function addEntryWithAjax() {
     const messages = document.getElementById('messages');
     const categoryInput = document.getElementById('categoryInput');
     const numberInput = document.getElementById('numberInput');
+    const urlInput = document.getElementById('urlInput');
     const categoryName = categoryInput.value.trim();
     const numberValue = numberInput.value.trim();
+    const urlValue = urlInput.value.trim();
 
-    if (categoryName && numberValue) {
+    if (categoryName && numberValue && urlValue) {
         entry = {
-            number: numberValue, category: categoryName
+            number: numberValue, category: categoryName, url: urlValue
         };
         categoryInput.value = '';
         numberInput.value = '';
+        urlInput.value = '';
 
         // Send the category name to the server using AJAX
-        fetch('/add-entry', { // Replace with your server endpoint
+        fetch('/add-entry', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,13 +69,14 @@ function deleteEntryWithAjax(tr) {
 }
 
 
-function editEntryWithAjax(tdId, numberInput, categoryInput) {
+function editEntryWithAjax(tdId, numberInput, categoryInput, urlInput) {
     const messages = document.getElementById('messages');
 
     const entry = {
         ID: tdId.textContent,
         number: numberInput.value,
-        category: categoryInput.value
+        category: categoryInput.value,
+        url: urlInput.value
     };
 
     fetch(`/entries`, {
@@ -100,10 +104,12 @@ function editEntryWithAjax(tdId, numberInput, categoryInput) {
 
 function renderEntry(entry) {
     const tr = document.createElement('tr');
+    tr.className = "bordered-cell";
     tr.setAttribute('id', entry.ID);
 
     const tdID = document.createElement('td');
     tdID.textContent = entry.ID;
+    tdID.className = "bordered-cell";
     tr.appendChild(tdID);
 
     const numberInput = document.createElement('input');
@@ -112,6 +118,8 @@ function renderEntry(entry) {
 
     const tdNumber = document.createElement('td');
     tdNumber.appendChild(numberInput);
+    tdNumber.className = "bordered-cell";
+
     tr.appendChild(tdNumber);
 
     const categoryInput = document.createElement('input');
@@ -122,14 +130,23 @@ function renderEntry(entry) {
     tdCategory.appendChild(categoryInput);
     tr.appendChild(tdCategory);
 
+    const tdURL = document.createElement('td');
+    tdURL.className = "bordered-cell";
+    const urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.value = entry.url;
+    tdURL.appendChild(urlInput);
+    tr.appendChild(tdURL);
+
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
     editButton.onclick = function () {
-        editEntryWithAjax(tdID, numberInput, categoryInput);
+        editEntryWithAjax(tdID, numberInput, categoryInput, urlInput);
     };
 
     const tdEdit = document.createElement('td');
     tdEdit.appendChild(editButton);
+    tdEdit.className = "bordered-cell";
     tr.appendChild(tdEdit);
 
     const deleteButton = document.createElement('button');
@@ -141,6 +158,7 @@ function renderEntry(entry) {
 
     const tdDelete = document.createElement('td');
     tdDelete.appendChild(deleteButton);
+    tdDelete.className = "bordered-cell";
     tr.appendChild(tdDelete);
 
     document.getElementById('entriesTable').appendChild(tr);

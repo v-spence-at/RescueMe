@@ -1,34 +1,52 @@
 {
   "entries": [
     {
-      "ID": 0,
+      "ID": "O9d2jOno6",
       "number": "02 1234 5678",
-      "category": "dogs"
+      "category": "dogs",
+      "url": "https://www.openstreetmap.org/?mlat=48.21066&mlon=16.35150#map=17/48.21066/16.35150"
     },
     {
-      "ID": 1,
+      "ID": "O9d2jOno5",
       "number": "03 1234 5678",
-      "category": "birds"
+      "category": "birds",
+      "url": "https://www.openstreetmap.org/?mlat=48.20508&mlon=14.28991#map=17/48.20508/14.28991"
     },
     {
-      "ID": 2,
+      "ID": "O9d2jOno4",
       "number": "04 1234 5678",
-      "category": "rodents"
+      "category": "rodents",
+      "url": "https://www.openstreetmap.org/?mlat=48.20518&mlon=14.29035#map=17/48.20518/14.29035"
     },
     {
-      "ID": 3,
+      "ID": "O9d2jOno3",
       "number": "05 1234 5678",
-      "category": "wild animals"
+      "category": "wild animals",
+      "url": "https://www.openstreetmap.org/?mlat=48.17869&mlon=16.32483#map=17/48.17869/16.32483"
     },
     {
-      "ID": 4,
+      "ID": "O9d2jOno2",
       "number": "06 1234 5678",
-      "category": "reptiles & amphibians"
+      "category": "reptiles & amphibians",
+      "url": "https://www.openstreetmap.org/?mlat=48.17862&mlon=16.32555#map=17/48.17862/16.32555"
     },
     {
-      "ID": "5",
+      "ID": "O9d2jOno1",
       "number": "2222 2222 2222",
-      "category": "cats"
+      "category": "cats",
+      "url": "https://www.openstreetmap.org/?mlat=48.17861&mlon=16.32575#map=17/48.17861/16.32575"
+    },
+    {
+      "ID": "O9d2jOno0",
+      "number": "3333 33333 33333",
+      "category": "elephants",
+      "url": "https://www.openstreetmap.org/?mlat=48.12296&mlon=14.87319#map=17/48.12296/14.87319"
+    },
+    {
+      "ID": "3snR56sf1",
+      "number": "4444 4444 4444",
+      "category": "camels",
+      "url": "https://www.openstreetmap.org/?mlat=48.05074&mlon=13.85282#map=17/48.05074/13.85282"
     }
   ]
 }

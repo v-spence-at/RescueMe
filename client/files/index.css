@@ -40,6 +40,13 @@ ul, ol {
 }
 
 .bordered-table {
+    max-height: 300px; /* Adjust height to show 5 entries */
+    max-width: fit-content;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: auto;
+}
+
+.bordered-cell {
     border: 2px solid darkblue;
     margin: 5px 0;
     padding: 10px;
@@ -49,3 +56,6 @@ ul, ol {
     color: white;
 }
 
+table {
+    border-collapse: collapse; /* Collapse borders */
+}
