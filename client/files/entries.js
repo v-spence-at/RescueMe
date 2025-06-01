@@ -184,7 +184,22 @@ function fetchEntries() {
     xhr.send();
 }
 
+// Function to check if the user is authenticated
+function checkAuthentication() {
+    const token = localStorage.getItem('token'); // Get the token from local storage
+    if (!token) {
+        // No token found, redirect to login
+        window.location.href = 'login.html';
+    } else {
+        // Token is valid, proceed to load entries
+        fetchEntries(); // Call a function to load entries data
+   }
+}
+
+function clearSession() {
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
+}
+
 // Fetch categories on page load
-window.onload = function () {
-    fetchEntries();
-};
+window.onload = checkAuthentication;

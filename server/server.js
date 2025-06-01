@@ -137,6 +137,26 @@ process.on('SIGTERM', () => {
     process.exit();
 });
 
+
+const jwt = require('jsonwebtoken');
+
+//very simple admin user so we can use JWT session management
+const user = { id: 1, username: 'admin', password: "password" };
+
+
+// Example login route
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    if (username !== user.username || password !== user.password) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(user, 'secret', { expiresIn: '1h' });
+    res.json({ token }); // Send token back to client
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server now running on http://localhost:${PORT}`);
 });

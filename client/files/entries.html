@@ -8,9 +8,16 @@
     <script src="entries.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1/index.min.js"></script>
 </head>
 <body>
-    <a href="index.html">Back</a>
+    <table class="bar">
+        <tr class="bar">
+            <td class="bar"><a href="index.html">Back</a></td>
+            <td class="bar"><button onclick="clearSession()">Logout</button></td>
+        </tr>
+    </table>
+
     <h2>Edit Entries</h2>
     <div class="bordered-table">
         <table id="entriesTable">
