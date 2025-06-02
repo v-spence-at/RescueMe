@@ -1,47 +1,83 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+h1 {
+  color: darkblue;
+  font-size: 24px;
+  font-family: Monaco, monospace;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.login-container {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+p,
+ul,
+ol {
+  font-family: Monaco, monospace;
+  line-height: 1.5;
 }
 
-h2 {
-    margin-bottom: 20px;
+.iframe-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.bordered-table {
+  max-height: 300px; /* Adjust height to show 5 entries */
+  max-width: 100%;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: auto; /* Use default scrollbar width */
 }
-
-button:hover {
-    background-color: #218838;
+.bordered-cell {
+  border: 2px solid darkblue;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  font-family: Monaco, monospace;
+  color: white;
 }
-
-.error {
-    color: red;
-    margin-top: 10px;
+table {
+  width: 100%; /* Full width for the table */
+  border-collapse: collapse; /* Collapse borders */
+}
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 20px; /* Adjust font size for smaller screens */
+    text-align: center;
+  }
+  .bordered-cell {
+    font-size: 14px; /* Adjust font size for readability */
+    padding: 8px; /* Adjust padding for smaller screens */
+  }
+  table,
+  tr,
+  td,
+  th {
+    display: block; /* Stack elements vertically */
+    width: 100%; /* Full width for table elements */
+  }
+  td::before {
+    content: attr(data-label); /* Use data-label for table headers */
+    font-weight: bold; /* Make headers bold */
+    display: block;
+  }
+  .responsive-iframe {
+    height: 100%; /* Full height for responsive iframe */
+    width: 100%; /* Full width for responsive iframe */
+  }
+  .login-container input,
+  .login-container button {
+    width: 100%; /* Full width for inputs and buttons */
+    font-size: 1rem; /* Adjust font size for readability */
+    margin: 10px 0; /* Add margin for spacing */
+    padding: 10px; /* Add padding for better spacing */
+  }
 }

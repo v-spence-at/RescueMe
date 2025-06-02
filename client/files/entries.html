@@ -1,97 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Entries</title>
-    <link href="entries.css" rel="stylesheet"/>
+    <link href="entries.css" rel="stylesheet" />
     <script src="entries.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1/index.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <table class="bar">
-        <tr class="bar">
-            <td class="bar"><a href="index.html">Back</a></td>
-            <td class="bar"><button onclick="clearSession()">Logout</button></td>
-        </tr>
+      <tr class="bar">
+        <td class="bar"><a href="index.html">Back</a></td>
+        <td class="bar"><button onclick="clearSession()">Logout</button></td>
+      </tr>
     </table>
 
     <h2>Edit Entries</h2>
     <div class="bordered-table">
-        <table id="entriesTable">
-            <tr>
-                <td class="bordered-cell">ID</td>
-                <td class="bordered-cell">NUMBER</td>
-                <td class="bordered-cell">CATEGORY</td>
-                <td class="bordered-cell">LOCATION</td>
-                <td class="bordered-cell">EDIT</td>
-                <td class="bordered-cell">DELETE</td>
-            </tr>
-        </table>
+      <table id="entriesTable">
+        <tr>
+          <td class="bordered-cell">ID</td>
+          <td class="bordered-cell">NUMBER</td>
+          <td class="bordered-cell">CATEGORY</td>
+          <td class="bordered-cell">LOCATION</td>
+          <td class="bordered-cell">EDIT</td>
+          <td class="bordered-cell">DELETE</td>
+        </tr>
+      </table>
     </div>
     <div class="message" id="messages"></div>
     <h2>Add New Entry</h2>
-    <input class="new-element" type="text" id="numberInput" placeholder="Add a new number">
-    <input class="new-element" type="text" id="categoryInput" placeholder="Add a new category">
-    <input class="new-element" type="text" id="urlInput" placeholder="Add a new url">
+    <input
+      class="new-element"
+      type="text"
+      id="numberInput"
+      placeholder="Add a new number"
+    />
+    <input
+      class="new-element"
+      type="text"
+      id="categoryInput"
+      placeholder="Add a new category"
+    />
+    <input
+      class="new-element"
+      type="text"
+      id="urlInput"
+      placeholder="Add a new url"
+    />
     <button onclick="addEntryWithAjax()">Add</button>
     <button onclick="submitNumbers()">Submit</button>
 
-    <div id="map" style="height: 200px; width: 50%;"></div>
+    <div id="map" style="height: 200px; width: 50%"></div>
     <div class="message" id="location"></div>
     <div class="message" id="addressField"></div>
     <div class="message" id="urlField"></div>
 
-
     <script>
-        const map = L.map('map').setView([48.2064, 14.2858], 8); // Center of Austria
+      const map = L.map("map").setView([48.2064, 14.2858], 8); // Center of Austria
 
-        // Add OpenStreetMap tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
+      // Add OpenStreetMap tile layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+      }).addTo(map);
 
-        let marker;
+      let marker;
 
-        // Add click event to the map
-        map.on('click', function(e) {
-            if (marker) {
-                map.removeLayer(marker); // Remove existing marker
-            }
-            marker = L.marker(e.latlng).addTo(map); // Add new marker
-            console.log("Selected location:", e.latlng.lat, e.latlng.lng);
-            const loc = document.getElementById('location');
-            loc.textContent = "latitude:" + e.latlng.lat + " longitude: " +  e.latlng.lng;
-            getAddress(e.latlng);
-        });
-
-        function getAddress(latlng){
-            const addressField = document.getElementById('addressField');
-            const urlField = document.getElementById('urlField');
-            const address = "/address?query=" + encodeURIComponent(latlng.lat + "+" + latlng.lng);
-            fetch(address, {
-                method: 'GET'
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        messages.textContent = "Network error";
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Address added:', data);
-                    addressField.textContent = "Address: " + data.address;
-                    urlField.textContent = "URL: " + data.url;
-                })
-                .catch(error => {
-                    console.error('There was a problem with the operation:', error);
-                    messages.textContent = "Error: " + error;
-                });
+      // Add click event to the map
+      map.on("click", function (e) {
+        if (marker) {
+          map.removeLayer(marker); // Remove existing marker
         }
-    </script>
+        marker = L.marker(e.latlng).addTo(map); // Add new marker
+        console.log("Selected location:", e.latlng.lat, e.latlng.lng);
+        const loc = document.getElementById("location");
+        loc.textContent =
+          "latitude:" + e.latlng.lat + " longitude: " + e.latlng.lng;
+        getAddress(e.latlng);
+      });
 
-</body>
+      function getAddress(latlng) {
+        const addressField = document.getElementById("addressField");
+        const urlField = document.getElementById("urlField");
+        const address =
+          "/address?query=" + encodeURIComponent(latlng.lat + "+" + latlng.lng);
+        fetch(address, {
+          method: "GET",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              messages.textContent = "Network error";
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Address added:", data);
+            addressField.textContent = "Address: " + data.address;
+            urlField.textContent = "URL: " + data.url;
+          })
+          .catch((error) => {
+            console.error("There was a problem with the operation:", error);
+            messages.textContent = "Error: " + error;
+          });
+      }
+    </script>
+  </body>
 </html>
