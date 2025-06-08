@@ -95,6 +95,7 @@ function getAddress(latlng) {
             a.href = data.url;
             a.textContent = data.url;
             a.target = '_blank';
+            a.rel="noopener noreferrer"
             urlField.innerHTML = "";
             urlField.appendChild(a);
         })
