@@ -11,100 +11,116 @@
     <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@8.5.1/index.min.js"></script>
   </head>
   <body>
-    <table class="bar">
-      <tr class="bar">
-        <td class="bar"><a href="index.html">Back</a></td>
-        <td class="bar"><button onclick="clearSession()">Logout</button></td>
-      </tr>
-    </table>
+    <div class="bar">
+      <a href="index.html">Back </a>
+      <button onclick="clearSession()">Logout</button>
+    </div>
 
     <h2>Edit Entries</h2>
     <div class="bordered-table">
       <table id="entriesTable">
         <tr>
-          <td class="bordered-cell">ID</td>
-          <td class="bordered-cell">NUMBER</td>
-          <td class="bordered-cell">CATEGORY</td>
-          <td class="bordered-cell">LOCATION</td>
-          <td class="bordered-cell">EDIT</td>
-          <td class="bordered-cell">DELETE</td>
+          <th>ID:</th>
+          <th>Name:</th>
+          <th>Address:</th>
+          <th>Phone:</th>
+          <th>Category:</th>
+          <th>Location URL:</th>
+          <th>EDIT</th>
+          <th>DELETE</th>
         </tr>
       </table>
     </div>
-    <div class="message" id="messages"></div>
-    <h2>Add New Entry</h2>
-    <input
-      class="new-element"
-      type="text"
-      id="numberInput"
-      placeholder="Add a new number"
-    />
-    <input
-      class="new-element"
-      type="text"
-      id="categoryInput"
-      placeholder="Add a new category"
-    />
-    <input
-      class="new-element"
-      type="text"
-      id="urlInput"
-      placeholder="Add a new url"
-    />
-    <button onclick="addEntryWithAjax()">Add</button>
-    <button onclick="submitNumbers()">Submit</button>
 
-    <div id="map" style="height: 200px; width: 50%"></div>
-    <div class="message" id="location"></div>
-    <div class="message" id="addressField"></div>
-    <div class="message" id="urlField"></div>
+    <div class="message" id="messages"></div>
+
+    <h2>Add New Entry</h2>
+    <div class="flex-container">
+      <div class="form-section">
+        <input
+          class="new-element"
+          type="text"
+          id="nameInput"
+          placeholder="Name"
+        />
+        <input
+          class="new-element"
+          type="text"
+          id="addressInput"
+          placeholder="Address"
+        />
+        <input
+          class="new-element"
+          type="text"
+          id="numberInput"
+          placeholder="Phone"
+        />
+        <input
+          class="new-element"
+          type="text"
+          id="categoryInput"
+          placeholder="Category"
+        />
+        <input
+          class="new-element"
+          type="text"
+          id="urlInput"
+          placeholder="Location URL"
+        />
+        <button onclick="addEntryWithAjax()">Add</button>
+      </div>
+
+      <div class="map-section">
+        <h3>Pick location on map</h3>
+        <div id="map"></div>
+        <div class="message" id="location"></div>
+        <div class="message" id="addressField"></div>
+        <div class="message" id="urlField"></div>
+      </div>
+    </div>
 
     <script>
-      const map = L.map("map").setView([48.2064, 14.2858], 8); // Center of Austria
-
-      // Add OpenStreetMap tile layer
+      // Initialize the map
+      const map = L.map("map").setView([51.505, -0.09], 13);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
       }).addTo(map);
 
+      // Add a marker to the map
       let marker;
 
-      // Add click event to the map
+      // Handle map click events
       map.on("click", function (e) {
         if (marker) {
-          map.removeLayer(marker); // Remove existing marker
+          map.removeLayer(marker);
         }
-        marker = L.marker(e.latlng).addTo(map); // Add new marker
-        console.log("Selected location:", e.latlng.lat, e.latlng.lng);
-        const loc = document.getElementById("location");
-        loc.textContent =
-          "latitude:" + e.latlng.lat + " longitude: " + e.latlng.lng;
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById(
+          "location"
+        ).textContent = `Latitude: ${e.latlng.lat},Longitude: ${e.latlng.lng}`;
         getAddress(e.latlng);
       });
 
       function getAddress(latlng) {
         const addressField = document.getElementById("addressField");
         const urlField = document.getElementById("urlField");
-        const address =
-          "/address?query=" + encodeURIComponent(latlng.lat + "+" + latlng.lng);
-        fetch(address, {
-          method: "GET",
-        })
+
+        fetch(
+          "/address?query=" + encodeURIComponent(latlng.lat + "," + latlng.lng)
+        )
           .then((response) => {
-            if (!response.ok) {
-              messages.textContent = "Network error";
-              throw new Error("Network response was not ok");
-            }
+            if (!response.ok) throw new Error("Failed to fetch address");
             return response.json();
           })
           .then((data) => {
-            console.log("Address added:", data);
             addressField.textContent = "Address: " + data.address;
-            urlField.textContent = "URL: " + data.url;
+            urlField.textContent = "Location URL: " + data.url;
+            document.getElementById("addressInput").value = data.address;
+            document.getElementById("urlInput").value = data.url;
           })
           .catch((error) => {
-            console.error("There was a problem with the operation:", error);
-            messages.textContent = "Error: " + error;
+            document.getElementById("messages").textContent =
+              "Error fetching address: " + error.message;
           });
       }
     </script>
