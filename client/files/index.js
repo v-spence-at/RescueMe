@@ -11,6 +11,7 @@ function updateMap(url, map) {
 
     marker = L.marker(latlng).addTo(map);
     map.setView(latlng, 15);
+    getAddress(latlng);
 }
 
 function renderEntries(entries, map) {
@@ -71,3 +72,34 @@ window.onload = function () {
 
     fetchEntries(map);
 };
+
+function getAddress(latlng) {
+    const addressField = document.getElementById("addressField");
+    const urlField = document.getElementById("urlField");
+    const address =
+        "/address?query=" + encodeURIComponent(latlng.lat + "+" + latlng.lng);
+    fetch(address, {
+        method: "GET",
+    })
+        .then((response) => {
+            if (!response.ok) {
+                messages.textContent = "Network error";
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Address added:", data);
+            addressField.textContent = "Address: " + data.address;
+            const a = document.createElement('a');
+            a.href = data.url;
+            a.textContent = data.url;
+            a.target = '_blank';
+            urlField.innerHTML = "";
+            urlField.appendChild(a);
+        })
+        .catch((error) => {
+            console.error("There was a problem with the operation:", error);
+            messages.textContent = "Error: " + error;
+        });
+}
