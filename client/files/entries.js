@@ -1,167 +1,209 @@
 function addEntryWithAjax() {
-    const messages = document.getElementById('messages');
-    const categoryInput = document.getElementById('categoryInput');
-    const numberInput = document.getElementById('numberInput');
-    const urlInput = document.getElementById('urlInput');
-    const categoryName = categoryInput.value.trim();
-    const numberValue = numberInput.value.trim();
-    const urlValue = urlInput.value.trim();
+  const messages = document.getElementById("messages");
+  const nameInput = document.getElementById("nameInput");
+  const addressInput = document.getElementById("addressInput");
+  const categoryInput = document.getElementById("categoryInput");
+  const numberInput = document.getElementById("numberInput");
+  const urlInput = document.getElementById("urlInput");
 
-    if (categoryName && numberValue && urlValue) {
-        entry = {
-            number: numberValue, category: categoryName, url: urlValue
-        };
-        categoryInput.value = '';
-        numberInput.value = '';
-        urlInput.value = '';
+  const categoryValue = categoryInput.value.trim();
+  const nameValue = nameInput.value.trim();
+  const addressValue = addressInput.value.trim();
+  const numberValue = numberInput.value.trim();
+  const urlValue = urlInput.value.trim();
 
-        // Send the category name to the server using AJAX
-        fetch('/add-entry', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(entry)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    messages.textContent = "Network error";
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                messages.textContent = data.message;
-                console.log('Entry added:', data);
-                renderEntry(data.entry);
-            })
-            .catch(error => {
-                console.error('There was a problem with the operation:', error);
-                messages.textContent = "Error: " + error;
-            });
-    } else {
-        alert('Please enter a category or a number value.');
-    }
+  if (nameValue && numberValue && categoryValue && urlValue) {
+    const entry = {
+      name: nameValue,
+      address: addressValue,
+      number: numberValue,
+      category: categoryValue,
+      url: urlValue,
+    };
+    // Clear the input fields after submission
+    nameInput.value = "";
+    addressInput.value = "";
+    categoryInput.value = "";
+    numberInput.value = "";
+    urlInput.value = "";
+
+    // Send the category name to the server using AJAX
+    fetch("/add-entry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        messages.textContent = data.message;
+        console.log("Entry added:", data);
+        renderEntry(data.entry);
+      })
+      .catch((error) => {
+        console.error("TError:", error);
+        messages.textContent = "Error: " + error.message;
+      });
+  } else {
+    alert("Please fill in the required fields.");
+  }
 }
-
 
 function deleteEntryWithAjax(tr) {
-    const entryId = tr.getAttribute('id');
-    const messages = document.getElementById('messages');
-    fetch(`/entries/${entryId}`, {
-        method: 'DELETE',
+  const entryId = tr.getAttribute("id");
+  const messages = document.getElementById("messages");
+  fetch(`/entries/${entryId}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-        .then(response => {
-            if (!response.ok) {
-                messages.textContent = "Network error";
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Entry deleted:', data);
-            messages.textContent = data.message;
-        })
-        .catch(error => {
-            console.error('There was a problem with the delete operation:', error);
-            messages.textContent = "Error: " + error;
-        });
+    .then((data) => {
+      messages.textContent = data.message;
+      tr.remove(); // Remove the row from the table
+    })
+    .catch((error) => {
+      console.error("Delete error", error);
+      messages.textContent = "Error: " + error.message;
+    });
 }
 
+function editEntryWithAjax(
+  tdId,
+  nameInput,
+  addressInput,
+  numberInput,
+  categoryInput,
+  urlInput
+) {
+  const messages = document.getElementById("messages");
 
-function editEntryWithAjax(tdId, numberInput, categoryInput, urlInput) {
-    const messages = document.getElementById('messages');
+  const entry = {
+    ID: tdId.textContent,
+    name: nameInput.value,
+    address: addressInput.value,
+    number: numberInput.value,
+    category: categoryInput.value,
+    url: urlInput.value,
+  };
 
-    const entry = {
-        ID: tdId.textContent,
-        number: numberInput.value,
-        category: categoryInput.value,
-        url: urlInput.value
-    };
-
-    fetch(`/entries`, {
-        method: 'PUT', headers: {
-            'Content-Type': 'application/json'
-        }, body: JSON.stringify(entry)
+  fetch(`/entries`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(entry),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-        .then(response => {
-            if (!response.ok) {
-                messages.textContent = "Network error";
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Entry updated:', data);
-            messages.textContent = data.message;
-        })
-        .catch(error => {
-            console.error('There was a problem with the PUT operation:', error);
-            messages.textContent = "Error: " + error;
-        });
+    .then((data) => {
+      messages.textContent = data.message;
+      console.log("Entry updated:", data);
+    })
+    .catch((error) => {
+      console.error("Update error:", error);
+      messages.textContent = "Error: " + error.message;
+    });
 }
-
 
 function renderEntry(entry) {
-    const tr = document.createElement('tr');
-    tr.className = "bordered-cell";
-    tr.setAttribute('id', entry.ID);
+  const tr = document.createElement("tr");
+  tr.className = "bordered-cell";
+  tr.setAttribute("id", entry.ID);
 
-    const tdID = document.createElement('td');
-    tdID.textContent = entry.ID;
-    tdID.className = "bordered-cell";
-    tr.appendChild(tdID);
+  const tdID = document.createElement("td");
+  tdID.textContent = entry.ID;
+  tdID.className = "bordered-cell";
+  tr.appendChild(tdID);
 
-    const numberInput = document.createElement('input');
-    numberInput.type = 'text';
-    numberInput.value = entry.number;
+  const nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.value = entry.name;
 
-    const tdNumber = document.createElement('td');
-    tdNumber.appendChild(numberInput);
-    tdNumber.className = "bordered-cell";
+  const tdName = document.createElement("td");
+  tdName.appendChild(nameInput);
+  tdName.className = "bordered-cell";
+  tr.appendChild(tdName);
 
-    tr.appendChild(tdNumber);
+  const addressInput = document.createElement("input");
+  addressInput.type = "text";
+  addressInput.value = entry.address;
 
-    const categoryInput = document.createElement('input');
-    categoryInput.type = 'text';
-    categoryInput.value = entry.category;
+  const tdAddress = document.createElement("td");
+  tdAddress.appendChild(addressInput);
+  tdAddress.className = "bordered-cell";
+  tr.appendChild(tdAddress);
 
-    const tdCategory = document.createElement('td');
-    tdCategory.appendChild(categoryInput);
-    tr.appendChild(tdCategory);
+  const numberInput = document.createElement("input");
+  numberInput.type = "text";
+  numberInput.value = entry.number;
 
-    const tdURL = document.createElement('td');
-    tdURL.className = "bordered-cell";
-    const urlInput = document.createElement('input');
-    urlInput.type = 'text';
-    urlInput.value = entry.url;
-    tdURL.appendChild(urlInput);
-    tr.appendChild(tdURL);
+  const tdNumber = document.createElement("td");
+  tdNumber.appendChild(numberInput);
+  tdNumber.className = "bordered-cell";
+  tr.appendChild(tdNumber);
 
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-    editButton.onclick = function () {
-        editEntryWithAjax(tdID, numberInput, categoryInput, urlInput);
-    };
+  const categoryInput = document.createElement("input");
+  categoryInput.type = "text";
+  categoryInput.value = entry.category;
 
-    const tdEdit = document.createElement('td');
-    tdEdit.appendChild(editButton);
-    tdEdit.className = "bordered-cell";
-    tr.appendChild(tdEdit);
+  const tdCategory = document.createElement("td");
+  tdCategory.appendChild(categoryInput);
+  tr.appendChild(tdCategory);
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function () {
-        deleteEntryWithAjax(tr);
-        tr.remove();
-    };
+  const urlInput = document.createElement("input");
+  urlInput.type = "text";
+  urlInput.value = entry.url;
 
-    const tdDelete = document.createElement('td');
-    tdDelete.appendChild(deleteButton);
-    tdDelete.className = "bordered-cell";
-    tr.appendChild(tdDelete);
+  const tdUrl = document.createElement("td");
+  tdUrl.appendChild(urlInput);
+  tdUrl.className = "bordered-cell";
+  tr.appendChild(tdUrl);
 
-    document.getElementById('entriesTable').appendChild(tr);
+  const editButton = document.createElement("button");
+  editButton.textContent = "Edit";
+  editButton.onclick = function () {
+    editEntryWithAjax(
+      tdID,
+      nameInput,
+      addressInput,
+      numberInput,
+      categoryInput,
+      urlInput
+    );
+  };
+
+  const tdEdit = document.createElement("td");
+  tdEdit.appendChild(editButton);
+  tdEdit.className = "bordered-cell";
+  tr.appendChild(tdEdit);
+
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete";
+  deleteButton.onclick = function () {
+    deleteEntryWithAjax(tr);
+    tr.remove();
+  };
+
+  const tdDelete = document.createElement("td");
+  tdDelete.appendChild(deleteButton);
+  tdDelete.className = "bordered-cell";
+  tr.appendChild(tdDelete);
+
+  document.getElementById("entriesTable").appendChild(tr);
 }
 
 
@@ -202,8 +244,8 @@ function checkAuthentication() {
 }
 
 function clearSession() {
-    localStorage.removeItem('token');
-    window.location.href = 'index.html';
+  localStorage.removeItem("token");
+  window.location.href = "index.html";
 }
 
 

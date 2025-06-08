@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rescue Me</title>
     <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   </head>
   <body>
-    <script src="index.js"></script>
-    <h1>Rescue Me</h1>
+    <h1>Rescue Me - Animal Emergency</h1>
     <a href="entries.html">Edit These Entries</a>
-    <div class="bordered-table">
-      <table id="entriesTable">
-        <tr>
-          <td class="bordered-cell">NUMBER</td>
-          <td class="bordered-cell">CATEGORY</td>
-          <td class="bordered-cell">URL</td>
-        </tr>
-      </table>
+
+    <p>Choose a category to view entries:</p>
+    <div class="button-container">
+      <button onclick="goToCategory('dogs')">Dogs</button>
+      <button onclick="goToCategory('cats')">Cats</button>
+      <button onclick="goToCategory('birds')">Birds</button>
+      <button onclick="goToCategory('wild')">Wild Animals</button>
     </div>
     <div id="map" style="height: 200px; width: 50%"></div>
     <div class="message" id="addressField"></div>
     <div class="message" id="urlField"></div>
     <div class="message" id="messages"></div>
+    <script>
+      function goToCategory(category) {
+        window.location.href = `category.html?category=${category}`;
+      }
+    </script>
   </body>
 </html>

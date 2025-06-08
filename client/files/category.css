@@ -1,0 +1,58 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fefcf8; /* Light background for contrast */
+  color: #333; /* Dark text for readability */
+  margin: 0;
+  text-align: center;
+  padding: 1rem;
+}
+h1 {
+  color: darkgreen;
+  font-size: 2rem; /* Larger font size for the title */
+  margin-bottom: 1rem; /* Space below the title */
+}
+ul {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0; /* Remove padding */
+  margin: 0 auto; /* Remove margin */
+}
+li {
+  background: #e6f2ff; /* Light blue background for list items */
+  margin: 10px auto;
+  padding: 16px; /* Add padding for better spacing */
+  width: 90%; /* Set a maximum width for list items */
+  max-width: 500px; /* Limit the width for larger screens */
+  background-color: #f0f8ff; /* Light blue background for list items */
+  border-radius: 10px; /* Rounded corners for list items */
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: left; /* Align text to the left */
+}
+li strong {
+  display: block; /* Make strong text block-level */
+  margin-bottom: 4px; /* Space below strong text */
+  font-weight: bold; /* Bold text for emphasis */
+  color: #004d4d; /* Darker color for strong text */
+}
+li a {
+  display: inline-block; /* Make links block-level for better spacing */
+  font-weight: bold; /* Bold text for links */
+  margin-top: 10px; /* Space above links */
+  color: #0066cc; /* Link color */
+  text-decoration: underline;
+}
+li a:hover {
+  text-decoration: none; /* Remove underline on hover */
+  color: #004080; /* Darker color on hover */
+}
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem; /* Smaller font size for the title */
+  }
+  li {
+    font-size: 0.9rem; /* Smaller font size for list items */
+    padding: 14px; /* Adjust padding for smaller screens */
+  }
+  li strong {
+    font-size: 1rem; /* Smaller font size for strong text */
+  }
+}

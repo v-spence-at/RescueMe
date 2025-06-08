@@ -2,12 +2,16 @@
   "entries": [
     {
       "ID": "O9d2jOno6",
+      "name": "Vetklinikum",
+      "address": "Tiergartenstraße 123, 1010 Wien, Österreich",
       "number": "02 1234 5678",
       "category": "dogs",
       "url": "https://www.openstreetmap.org/?mlat=48.21066&mlon=16.35150#map=17/48.21066/16.35150"
     },
     {
       "ID": "O9d2jOno5",
+      "name": "Vogelklinik",
+      "address": "Vogelweg 456, 4020 Linz, Österreich",
       "number": "03 1234 5678",
       "category": "birds",
       "url": "https://www.openstreetmap.org/?mlat=48.20508&mlon=14.28991#map=17/48.20508/14.28991"
