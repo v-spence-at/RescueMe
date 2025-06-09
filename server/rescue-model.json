@@ -26,14 +26,18 @@
     },
     {
       "ID": "O9d2jOno3",
+      "name": "Igelhaus",
+      "address": "Hofburg Palace, Stallburggasse, 1010 Vienna, Austria",
       "number": "05 1234 5678",
-      "category": "wild animals",
+      "category": "wild",
       "url": "https://www.openstreetmap.org/?mlat=48.17869&mlon=16.32483#map=17/48.17869/16.32483"
     },
     {
       "ID": "O9d2jOno2",
+      "name": "Papageienhilfe",
+      "address": "Hofgasse 1",
       "number": "06 1234 5678",
-      "category": "reptiles & amphibians",
+      "category": "birds",
       "url": "https://www.openstreetmap.org/?mlat=48.17862&mlon=16.32555#map=17/48.17862/16.32555"
     },
     {
@@ -44,6 +48,8 @@
     },
     {
       "ID": "O9d2jOno0",
+      "name": "undefined",
+      "address": "undefined",
       "number": "3333 33333 33333",
       "category": "elephants",
       "url": "https://www.openstreetmap.org/?mlat=48.12296&mlon=14.87319#map=17/48.12296/14.87319"

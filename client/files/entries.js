@@ -88,7 +88,7 @@ function editEntryWithAjax(
   const messages = document.getElementById("messages");
 
   const entry = {
-    ID: tdId.textContent,
+    ID: tdId.textContent.trim(),
     name: nameInput.value,
     address: addressInput.value,
     number: numberInput.value,
