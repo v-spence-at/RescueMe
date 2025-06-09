@@ -51,6 +51,7 @@ window.onload = function () {
 
         list.appendChild(li);
       });
+      container.innerHTML = ""; // Clear previous content
       container.appendChild(list);
     })
     .catch((error) => {

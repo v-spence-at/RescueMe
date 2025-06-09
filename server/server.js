@@ -141,14 +141,12 @@ app.get("/address", function (req, res) {
     console.log("No query parameter");
     res.sendStatus(400); // Send a 400 status code if no title is provided
   }
-
-  //"https://api.opencagedata.com/geocode/v1/json?q=52.5432379%2C+13.4142133&key=477650a203ff446ba31a00fa8d53afdd"
-}),
-  // Save data when the server shuts down
-  process.on("SIGINT", () => {
-    saveData();
-    process.exit();
-  });
+});
+// Save data when the server shuts down
+process.on("SIGINT", () => {
+  saveData();
+  process.exit();
+});
 
 process.on("SIGTERM", () => {
   saveData();

@@ -48,7 +48,7 @@ li a:hover {
   display: flex; /* Use flexbox for layout */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
+
   min-height: 100vh; /* Full height of the viewport */
 }
 @media screen and (max-width: 480px) {
