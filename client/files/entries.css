@@ -20,6 +20,7 @@ h2 {
 
 .bordered-table {
   overflow-x: auto; /* Enable horizontal scrolling */
+  display: block;
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -35,8 +36,12 @@ td {
   padding: 0.5rem; /* Padding for table cells */
   text-align: left; /* Align text to the left */
   background-color: lightcyan; /* Background color for table cells */
-  color: white; /* Text color for table cells */
+  color: #333; /* Text color for table cells */
   font-family: Monaco, monospace; /* Monospace font for table cells */
+}
+td:first-child,
+th:first-child {
+  display: none; /* Hide the first column */
 }
 
 tr:nth-child(even) {
