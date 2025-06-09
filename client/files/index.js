@@ -11,7 +11,7 @@ function updateMap(url, map) {
 
     marker = L.marker(latlng).addTo(map);
     map.setView(latlng, 15);
-    getAddress(latlng);
+    getAddressWithAjax(latlng);
 }
 
 function renderEntries(entries, map) {
@@ -40,25 +40,28 @@ function renderEntries(entries, map) {
     });
 }
 
-function fetchEntries(map) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        const bodyElement = document.querySelector("body");
-        if (xhr.status === 200) {
-            const entries = JSON.parse(xhr.responseText);
-            renderEntries(entries, map);
-        } else {
-            bodyElement.append(
-                "Daten konnten nicht geladen werden, Status " +
-                xhr.status +
-                " - " +
-                xhr.statusText
-            );
-        }
 
-    };
-    xhr.open("GET", "/entries");
-    xhr.send();
+function fetchEntriesWithAjax(map) {
+
+    fetch("/entries", {
+        method: 'GET',
+    })
+        .then(response => {
+            if (!response.ok) {
+                messages.textContent = "Network error";
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            messages.textContent = data.message;
+            renderEntries(data, map);
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('data could not be loaded:', error);
+            messages.textContent = "Error: " + error;
+        });
 }
 
 // Fetch entries on page load
@@ -70,10 +73,10 @@ window.onload = function () {
         maxZoom: 19,
     }).addTo(map);
 
-    fetchEntries(map);
+    fetchEntriesWithAjax(map);
 };
 
-function getAddress(latlng) {
+function getAddressWithAjax(latlng) {
     const addressField = document.getElementById("addressField");
     const urlField = document.getElementById("urlField");
     const address =

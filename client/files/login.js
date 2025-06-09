@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Send login request to the server
+    // Send login request to the server with AJAX
     fetch('/login', {
         method: 'POST',
         headers: {

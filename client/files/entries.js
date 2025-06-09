@@ -165,23 +165,28 @@ function renderEntry(entry) {
 }
 
 
-function fetchEntries() {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        const bodyElement = document.querySelector("body");
-        if (xhr.status === 200) {
-            const entries = JSON.parse(xhr.responseText);
-            entries.forEach(entry => {
+function fetchEntriesWithAjax() {
+    fetch("/entries", {
+        method: 'GET',
+    })
+        .then(response => {
+            if (!response.ok) {
+                messages.textContent = "Network error";
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            messages.textContent = data.message;
+            data.forEach(entry => {
                 renderEntry(entry);
             });
-            console.log(entries);
-        } else {
-            bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText);
-        }
-
-    };
-    xhr.open("GET", "/entries");
-    xhr.send();
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('data could not be loaded:', error);
+            messages.textContent = "Error: " + error;
+        });
 }
 
 // Function to check if the user is authenticated
@@ -192,7 +197,7 @@ function checkAuthentication() {
         window.location.href = 'login.html';
     } else {
         // Token is valid, proceed to load entries
-        fetchEntries(); // Call a function to load entries data
+        fetchEntriesWithAjax(); // Call a function to load entries data
    }
 }
 
