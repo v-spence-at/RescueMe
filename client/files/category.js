@@ -26,6 +26,12 @@ window.onload = function () {
       if (filtered.length === 0) {
         container.innerHTML = "<p>No entries found for this category.</p>";
         return;
+      } else {
+        if (filtered.length === 1) {
+          container.innerHTML = "<p>" + filtered.length +  " entry found for this category.</p>";
+        } else {
+          container.innerHTML = "<p>" + filtered.length +  " entries found for this category.</p>";
+        }
       }
       const list = document.createElement("ul");
 
