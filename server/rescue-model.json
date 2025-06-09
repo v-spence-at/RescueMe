@@ -5,7 +5,7 @@
       "name": "Vetklinikum",
       "address": "Tiergartenstraße 123, 1010 Wien, Österreich",
       "number": "02 1234 5678",
-      "category": "dogs",
+      "category": "Dogs",
       "url": "https://www.openstreetmap.org/?mlat=48.21066&mlon=16.35150#map=17/48.21066/16.35150"
     },
     {
@@ -17,12 +17,6 @@
       "url": "https://www.openstreetmap.org/?mlat=48.20508&mlon=14.28991#map=17/48.20508/14.28991"
     },
     {
-      "ID": "O9d2jOno4",
-      "number": "04 1234 5678",
-      "category": "rodents",
-      "url": "https://www.openstreetmap.org/?mlat=48.20518&mlon=14.29035#map=17/48.20518/14.29035"
-    },
-    {
       "ID": "O9d2jOno3",
       "name": "Wild Animals",
       "address": "Tiergartenstraße 123, 1010 Wien, Österreich",
@@ -31,42 +25,20 @@
       "url": "https://www.openstreetmap.org/?mlat=48.17869&mlon=16.32483#map=17/48.17869/16.32483"
     },
     {
-      "ID": "O9d2jOno2",
-      "number": "06 1234 5678",
-      "category": "reptiles & amphibians",
-      "url": "https://www.openstreetmap.org/?mlat=48.17862&mlon=16.32555#map=17/48.17862/16.32555"
-    },
-    {
-      "ID": "O9d2jOno1",
-      "number": "2222 2222 2222",
-      "category": "cats",
-      "url": "https://www.openstreetmap.org/?mlat=48.17861&mlon=16.32575#map=17/48.17861/16.32575"
-    },
-    {
-      "ID": "O9d2jOno0",
-      "number": "3333 33333 33333",
-      "category": "elephants",
-      "url": "https://www.openstreetmap.org/?mlat=48.12296&mlon=14.87319#map=17/48.12296/14.87319"
-    },
-    {
-      "ID": "3snR56sf1",
-      "number": "4444 4444 4444",
-      "category": "camels",
-      "url": "https://www.openstreetmap.org/?mlat=48.05074&mlon=13.85282#map=17/48.05074/13.85282"
-    },
-    {
-      "ID": "bMIderxJx",
-      "number": "4444 5555 555 66",
-      "category": "Lamas",
-      "url": "https://www.openstreetmap.org/?mlat=47.00591&mlon=15.62283#map=16/47.00591/15.62283"
-    },
-    {
       "ID": "1DSZQ1Feq",
       "name": "Tierarzt Gruber",
       "address": "26 Park Street, London, SE1 9EQ, United Kingdom",
       "number": "01 34436 57",
       "category": "Cats",
       "url": "https://www.openstreetmap.org/?mlat=51.50576&mlon=-0.09263#map=17/51.50576/-0.09263"
+    },
+    {
+      "ID": "a1s8fkema",
+      "name": "Bon Pot",
+      "address": "Spiegelgasse 8, 1010 Vienna, Austria",
+      "number": "01 404 44444",
+      "category": "Cats",
+      "url": "https://www.openstreetmap.org/?mlat=48.20712&mlon=16.36987#map=17/48.20712/16.36987"
     }
   ]
 }
