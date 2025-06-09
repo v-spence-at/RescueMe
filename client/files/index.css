@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff; /* Light blue background for contrast */
+  color: #333; /* Dark text for readability */
+  text-align: center;
+}
+h1 {
+  color: darkgreen;
+  font-size: 2.5rem; /* Larger font size for the title */
+  margin-bottom: 1.5rem; /* Space below the title */
+  font-family: "Courier New", Courier, monospace; /* Monospace font for the title */
+}
+p {
+  font-size: 1.2rem; /* Slightly larger font size for paragraphs */
+  margin-bottom: 2rem; /* Space below paragraphs */
+  color: #555; /* Softer color for paragraph text */
+}
+a {
+  color: #0066cc; /* Link color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Bold text for links */
+}
+a:hover {
+  text-decoration: underline; /* Underline on hover */
+  color: #004080; /* Darker color on hover */
+}
+.button-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 1rem; /* Space between buttons */
+  margin-top: 2rem; /* Space above button container */
+}
+.button-container button {
+  display: inline-block; /* Make links block-level for better spacing */
+  padding: 2rem 3rem; /* Padding for buttons */
+  background-color: #4caf50; /* Green background for buttons */
+  color: white; /* White text for buttons */
+  border-radius: 12px; /* Rounded corners for buttons */
+  font-size: 1.8rem; /* Font size for buttons */
+  font-family: "Courier New", Courier, monospace; /* Monospace font for buttons */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  text-align: center; /* Center text in buttons */
+  min-width: 200px; /* Minimum width for buttons */
+}
+.button-container button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.08); /* Slightly enlarge button on hover */
+}
+@media screen and (max-width: 600px) {
+  body {
+    padding: 1rem; /* Reduce padding for smaller screens */
+  }
+  h1 {
+    font-size: 2rem; /* Smaller font size for the title */
+  }
+  .button-container {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    align-items: center; /* Center buttons horizontally */
+  }
+  .button-container button {
+    width: 100%; /* Full width for buttons on smaller screens */
+    padding: 2rem; /* Maintain padding for buttons */
+    font-size: 1.6rem; /* Smaller font size for buttons */
+    text-align: center; /* Center text in buttons */
+  }
+}

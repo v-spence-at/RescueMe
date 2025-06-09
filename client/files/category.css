@@ -44,15 +44,34 @@ li a:hover {
   text-decoration: none; /* Remove underline on hover */
   color: #004080; /* Darker color on hover */
 }
+.entries-container {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  min-height: 100vh; /* Full height of the viewport */
+}
 @media screen and (max-width: 480px) {
+  body {
+    padding: 0.5rem; /* Reduce padding for smaller screens */
+  }
   h1 {
-    font-size: 1.6rem; /* Smaller font size for the title */
+    font-size: 1.4rem; /* Smaller font size for the title */
   }
   li {
     font-size: 0.9rem; /* Smaller font size for list items */
-    padding: 14px; /* Adjust padding for smaller screens */
+    padding: 10px; /* Reduce padding for smaller screens */
+    width: 100%; /* Full width for smaller screens */
+    box-sizing: border-box; /* Ensure padding is included in width */
   }
   li strong {
-    font-size: 1rem; /* Smaller font size for strong text */
+    font-size: 0.95rem; /* Smaller font size for strong text */
+  }
+  li a {
+    display: block; /* Make links block-level for better spacing */
+    word-break: break-word; /* Allow long words to break */
+  }
+  .entries-container {
+    padding: 0 0.5rem; /* Reduce padding for smaller screens */
   }
 }

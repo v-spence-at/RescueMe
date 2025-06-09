@@ -18,8 +18,10 @@
     },
     {
       "ID": "O9d2jOno4",
+      "name": "Wildtierstation Greifenstein",
+      "address": "undefined",
       "number": "04 1234 5678",
-      "category": "rodents",
+      "category": "wild",
       "url": "https://www.openstreetmap.org/?mlat=48.20518&mlon=14.29035#map=17/48.20518/14.29035"
     },
     {
@@ -51,12 +53,6 @@
       "number": "4444 4444 4444",
       "category": "camels",
       "url": "https://www.openstreetmap.org/?mlat=48.05074&mlon=13.85282#map=17/48.05074/13.85282"
-    },
-    {
-      "ID": "bMIderxJx",
-      "number": "4444 5555 555 66",
-      "category": "Lamas",
-      "url": "https://www.openstreetmap.org/?mlat=47.00591&mlon=15.62283#map=16/47.00591/15.62283"
     },
     {
       "ID": "1DSZQ1Feq",
