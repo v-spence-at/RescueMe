@@ -19,6 +19,6 @@
 ## Should Requirements:
 - S1: The system should consume a least two external REST web services.
 - S2: The system should offer a second individual FE component that communicates with at least three HTTP endpoints of the BE component.
-- S3: The FE component should be designed in a way that it is w3c compliant (https://validator.w3.org/).
+- S3: The FE component should be designed in a way that it is w3c compliant (https://validator.w3.org/). (&#x2714; checked, with no errors)
 - S4: The FE component should be responsive in a way that it has a dedicated view for mobile and desktop screens.
 

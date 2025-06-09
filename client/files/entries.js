@@ -206,5 +206,60 @@ function clearSession() {
     window.location.href = 'index.html';
 }
 
-// Fetch categories on page load
-window.onload = checkAuthentication;
+
+function getAddressWithAjax(latlng) {
+    const addressField = document.getElementById("addressField");
+    const urlField = document.getElementById("urlField");
+    const address =
+        "/address?query=" + encodeURIComponent(latlng.lat + "+" + latlng.lng);
+    fetch(address, {
+        method: "GET",
+    })
+        .then((response) => {
+            if (!response.ok) {
+                messages.textContent = "Network error";
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Address added:", data);
+            addressField.textContent = "Address: " + data.address;
+            urlField.textContent = "URL: " + data.url;
+        })
+        .catch((error) => {
+            console.error("There was a problem with the operation:", error);
+            messages.textContent = "Error: " + error;
+        });
+}
+
+
+function loadMap() {
+    const map = L.map("map").setView([48.2064, 14.2858], 8); // Center of Austria
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+    }).addTo(map);
+
+    let marker;
+
+    // Add click event to the map
+    map.on("click", function (e) {
+        if (marker) {
+            map.removeLayer(marker); // Remove existing marker
+        }
+        marker = L.marker(e.latlng).addTo(map); // Add new marker
+        console.log("Selected location:", e.latlng.lat, e.latlng.lng);
+        const loc = document.getElementById("location");
+        loc.textContent =
+            "latitude:" + e.latlng.lat + " longitude: " + e.latlng.lng;
+        getAddressWithAjax(e.latlng);
+    });
+}
+
+// Check if allowed to edit and load the map
+window.onload = function () {
+    checkAuthentication();
+    this.loadMap();
+}
