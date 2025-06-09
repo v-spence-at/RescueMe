@@ -24,8 +24,10 @@
     },
     {
       "ID": "O9d2jOno3",
+      "name": "Wild Animals",
+      "address": "Tiergartenstraße 123, 1010 Wien, Österreich",
       "number": "05 1234 5678",
-      "category": "wild animals",
+      "category": "Wild Animals",
       "url": "https://www.openstreetmap.org/?mlat=48.17869&mlon=16.32483#map=17/48.17869/16.32483"
     },
     {

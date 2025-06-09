@@ -120,27 +120,29 @@ app.put("/entries", (req, res) => {
 });
 
 app.get("/address", function (req, res) {
-  console.log(req.query);
-  const query = req.query.query;
-  if (query != null) {
-    axios
-      .get(URL + query)
-      .then((response) => {
-        console.log(response.data.results[0]);
-        const data = {
-          address: response.data.results[0].formatted,
-          url: response.data.results[0].annotations.OSM.url,
-        };
-        res.json(data); // Send the response data back to the client
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(400); // Send a 400 status code in case of an error
-      });
-  } else {
-    console.log("No query parameter");
-    res.sendStatus(400); // Send a 400 status code if no title is provided
-  }
+    console.log(req.query);
+    const query = req.query.query;
+    if (query != null) {
+        axios
+            .get(URL + query)
+            .then((response) => {
+                console.log(response.data.results[0]);
+                const data = {
+                    address: response.data.results[0].formatted,
+                    url: response.data.results[0].annotations.OSM.url,
+                };
+                res.json(data); // Send the response data back to the client
+            })
+            .catch((err) => {
+                console.log(err);
+                res.sendStatus(400); // Send a 400 status code in case of an error
+            });
+    } else {
+        console.log("No query parameter");
+        res.sendStatus(400); // Send a 400 status code if no title is provided
+    }
+});
+
 
 app.get('/address', function (req, res) {
     console.log(req.query);
@@ -165,12 +167,11 @@ app.get('/address', function (req, res) {
     }
 });
 
-
 // Save data when the server shuts down
 process.on('SIGINT', () => {
     saveData();
     process.exit();
-  });
+});
 
 process.on("SIGTERM", () => {
   saveData();
