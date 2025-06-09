@@ -1,0 +1,103 @@
+#map {
+  height: 400px;
+  width: 100%;
+  max-width: 600px; 
+}
+
+body {
+  background-color: #a3ccff;
+  font-family: Arial, sans-serif;
+}
+.bar {
+  background-color: wheat;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Align items at the start */
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.new-element {
+  padding: 4px;
+  margin: 5px 0;
+}
+
+.message {
+  color: red;
+  font-size: 12px;
+}
+
+.bordered-table {
+  max-height: 200px; /* Adjust height to show 5 entries */
+  max-width: fit-content;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: auto; /* Use default scrollbar width */
+}
+
+.bordered-cell {
+  border: 2px solid indianred;
+  margin: 5px 0;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: lightcoral;
+  font-family: Monaco, monospace;
+  color: white;
+}
+
+table {
+  width: 100%; /* Full width for the table */
+  border-collapse: collapse; /* Collapse borders */
+}
+tr {
+  background-color: cornflowerblue;
+  list-style-type: none;
+  padding: 0;
+  margin-right: 10px; /* Space between the list and buttons */
+}
+td {
+  margin: 5px 0;
+  padding: 8px; /* Add padding for better spacing */
+}
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack elements vertically on small screens */
+    padding: 10px; /* Add padding for better spacing */
+  }
+  .new-element {
+    width: 100%; /* Full width for new elements on small screens */
+    font-size: 1rem;
+  }
+  .bordered-table {
+    max-height: 100%; /* Allow full height on small screens */
+    overflow-x: auto; /* Enable scrolling if needed */
+  }
+  table,
+  tr,
+  td {
+    display: block; /* Make table cells block elements for better stacking */
+    width: 100%; /* Full width for table cells */
+  }
+  td {
+    border: none; /* Remove borders for better appearance on small screens */
+    margin-bottom: 10px; /* Add margin for spacing */
+  }
+  td::before {
+    content: attr(data-label); /* Use data-label for better accessibility */
+    font-weight: bold; /* Make label bold */
+    display: block; /* Make label block element */
+    margin-bottom: 5px; /* Add space between label and content */
+  }
+  button {
+    width: 100%; /* Full width for buttons on small screens */
+    margin: 10px 0; /* Add margin for spacing */
+  }
+  h2 {
+    font-size: 1.4rem; /* Adjust heading size for better readability */
+    text-align: center;
+  }
+}
