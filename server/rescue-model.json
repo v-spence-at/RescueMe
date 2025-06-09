@@ -57,6 +57,14 @@
       "number": "4444 5555 555 66",
       "category": "Lamas",
       "url": "https://www.openstreetmap.org/?mlat=47.00591&mlon=15.62283#map=16/47.00591/15.62283"
+    },
+    {
+      "ID": "1DSZQ1Feq",
+      "name": "Tierarzt Gruber",
+      "address": "26 Park Street, London, SE1 9EQ, United Kingdom",
+      "number": "01 34436 57",
+      "category": "Cats",
+      "url": "https://www.openstreetmap.org/?mlat=51.50576&mlon=-0.09263#map=17/51.50576/-0.09263"
     }
   ]
 }
