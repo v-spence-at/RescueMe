@@ -60,6 +60,7 @@ app.post("/add-entry", function (req, res) {
     };
     console.log(entry);
     rescueModel.entries.push(entry);
+    saveData(); // Save the updated model to the file
     res.status(200).send({
       message: "Entry updated successfully",
       entry: entry,
@@ -76,6 +77,7 @@ app.delete("/entries/:entryId", (req, res) => {
     // Remove the entry from the array
     const entry = rescueModel.entries[index];
     rescueModel.entries.splice(index, 1);
+    saveData(); // Save the updated model to the file
     console.log("Deleted entry with id " + entry.ID);
     console.log("Updated entries:", rescueModel.entries);
     return res.status(200).json({ message: "Entry deleted successfully" });
@@ -105,6 +107,7 @@ app.put("/entries", (req, res) => {
         url: entryInput.url || existing.url,
       };
       rescueModel.entries[index] = updatedEntry; // Update the entry in the array
+      saveData(); // Save the updated model to the file
       console.log("Updated entries:", updatedEntry);
       return res.status(200).json({ message: "Entry updated successfully" });
     } else {
